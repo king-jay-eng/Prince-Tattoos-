@@ -60,16 +60,17 @@ H.login = async (req, res) => {
 H.upload = async (req, res) => {
   if (req.method !== "POST") return res.status(405).end();
   try {
+    if (!isAdmin(req)) throw new Error("Please sign in again (session expired).");
+    if (!E.BLOB_READ_WRITE_TOKEN) throw new Error("Blob storage isn’t connected. In Vercel open Storage, create a Blob store, connect it to this project (Production), then redeploy.");
     const { handleUpload } = require("@vercel/blob/client");
+    const hdrs = new Headers();
+    for (const [k, v] of Object.entries(req.headers)) if (typeof v === "string") hdrs.set(k, v);
+    const request = new Request("https://" + req.headers.host + "/api/index?r=upload", { method: "POST", headers: hdrs });
     res.json(await handleUpload({
-      body: req.body, request: req,
-      onBeforeGenerateToken: async () => {
-        if (!isAdmin(req)) throw new Error("Unauthorized");
-        return { allowedContentTypes: ["image/*", "video/*"], maximumSizeInBytes: 300 * 1024 * 1024, addRandomSuffix: true };
-      },
-      onUploadCompleted: async () => {},
+      body: req.body, request,
+      onBeforeGenerateToken: async () => ({ allowedContentTypes: ["image/*", "video/*"], maximumSizeInBytes: 300 * 1024 * 1024, addRandomSuffix: true }),
     }));
-  } catch (e) { res.status(400).json({ error: e.message }); }
+  } catch (e) { console.error(e); res.status(400).json({ error: e.message }); }
 };
 
 H.media = async (req, res) => {
