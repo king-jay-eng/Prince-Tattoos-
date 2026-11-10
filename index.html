@@ -7,5 +7,5 @@ input{min-height:50px;padding:0 12px;font-size:16px;border:2px solid #efe6d2;bac
 <script>
 document.getElementById("f").onsubmit=async function(e){e.preventDefault();var m=document.getElementById("m");m.textContent="Checking…";
 try{var r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:document.getElementById("p").value})});
-if(r.ok){location.href="/admin"}else{var j=await r.json();m.textContent=j.error||"Sign in failed."}}catch(x){m.textContent="Couldn’t reach the server."}};
+var j={};try{j=await r.json()}catch(z){}if(r.ok){location.href="/admin"}else{m.textContent=j.error||"Server error ("+r.status+"). Check the Vercel setup."}}catch(x){m.textContent="Couldn’t reach the server."}};
 </script></body></html>

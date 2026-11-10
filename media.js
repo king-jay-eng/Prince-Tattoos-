@@ -1,6 +1,7 @@
 const db = require("../lib/db"), { isAdmin } = require("../lib/auth"), { del } = require("@vercel/blob");
+const wrap = require("../lib/wrap");
 const cl = (v, n) => String(v == null ? "" : v).trim().slice(0, n);
-module.exports = async (req, res) => {
+module.exports = wrap(async (req, res) => {
   if (req.method === "GET") {
     const all = (await db.hgetall("media")) || {};
     res.setHeader("Cache-Control", "no-store");
@@ -21,4 +22,4 @@ module.exports = async (req, res) => {
     return res.json({ ok: true });
   }
   res.status(405).end();
-};
+});

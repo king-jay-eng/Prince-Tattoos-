@@ -1,14 +1,15 @@
 const db = require("../lib/db"), { isAdmin } = require("../lib/auth");
+const wrap = require("../lib/wrap");
 const cl = (v, n) => String(v == null ? "" : v).trim().slice(0, n);
-module.exports = async (req, res) => {
+module.exports = wrap(async (req, res) => {
   const DEP = +process.env.DEPOSIT || 50, CUR = process.env.CURRENCY || "USD";
   if (req.method === "POST") {
     const b = req.body || {}, name = cl(b.name, 80), contact = cl(b.contact, 120);
     if (!name || !contact) return res.status(400).json({ error: "Please add your name and phone or email." });
     const today = new Date().toISOString().slice(0, 10);
     const dates = [...new Set((Array.isArray(b.dates) ? b.dates : []).map(String))]
-      .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d) && d > today && new Date(d + "T12:00:00Z").getUTCDay() >= 2).slice(0, 10).sort();
-    if (!dates.length) return res.status(400).json({ error: "Please choose at least one date (Tuesday to Saturday)." });
+      .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d) && d > today).slice(0, 10).sort();
+    if (!dates.length) return res.status(400).json({ error: "Please choose at least one date ." });
     const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6), total = dates.length * DEP;
     const bk = { id, name, contact, placement: cl(b.placement, 60), style: cl(b.style, 40), time: cl(b.time, 10), notes: cl(b.notes, 400), dates, total, currency: CUR, status: "New", paid: false, created: Date.now() };
     await db.hset("bookings", { [id]: bk });
@@ -35,4 +36,4 @@ module.exports = async (req, res) => {
     return res.json(b);
   }
   res.status(405).end();
-};
+});
