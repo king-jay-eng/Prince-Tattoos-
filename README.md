@@ -1,6 +1,6 @@
 # Prince Tattoos — deploy guide (Vercel)
 
-Public site: /            Admin: /admin/login  (not linked anywhere on the public site)
+Public site: /            Admin: /admin (sign in from the "Owner login" link at the bottom of the home page)
 
 ## 1. Deploy
 1. Put this folder in a GitHub repo, then Vercel → Add New → Project → import it.
@@ -37,5 +37,5 @@ Without SKRILL_EMAIL the site still saves bookings and offers WhatsApp instead.
 - Open `https://YOUR-SITE/api/health` — it must show JSON like `{"site":"ok","redis":true,...}`.
   - **404** = the `api` folder was not deployed. `api/`, `lib/`, `package.json` and `index.html` must sit at the ROOT of the repo (not inside another folder), and Vercel → Settings → General → Root Directory must be empty.
   - Any value showing `false` = that setting is missing; add it and redeploy.
-- Owner login: scroll to the bottom of the home page → "Owner login", or go to /admin/login.
+- Owner login: scroll to the bottom of the home page → "Owner login". There is no separate login page.
 - Bookings are saved automatically from the booking form. New ones show on the Bookings tab within 20 seconds.
