@@ -108,7 +108,7 @@ H.bookings = async (req, res) => {
     await db.hset("bookings", { [id]: bk });
     const o = "https://" + req.headers.host;
     const skrill = E.SKRILL_EMAIL ? { url: "https://pay.skrill.com", fields: {
-      pay_to_email: E.SKRILL_EMAIL, transaction_id: id, status_url: o + "/api/skrill", return_url: o + "/?paid=1", cancel_url: o + "/?cancelled=1",
+      pay_to_email: E.SKRILL_EMAIL, transaction_id: id, status_url: o + "/api/index?r=skrill", return_url: o + "/?paid=1", cancel_url: o + "/?cancelled=1",
       language: "EN", amount: total.toFixed(2), currency: CUR, detail1_description: "Prince Tattoos deposit", detail1_text: dates.length + " session(s): " + dates.join(", ") } } : null;
     return res.json({ id, total, currency: CUR, skrill });
   }

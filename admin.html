@@ -22,33 +22,33 @@ input,select,textarea{min-height:46px;border:2px solid #141210;padding:8px 10px;
 import {upload} from "https://esm.sh/@vercel/blob/client";
 const $=i=>document.getElementById(i),esc=t=>String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 async function api(m,u,b){const r=await fetch(u,{method:m,headers:{"Content-Type":"application/json"},body:b?JSON.stringify(b):undefined});if(r.status===401){location.href="/#owner";throw 0}const j=await r.json();if(!r.ok)throw new Error(j.error||"Failed");return j}
-$("out").onclick=async()=>{await fetch("/api/login",{method:"DELETE"});location.href="/#owner"};
+$("out").onclick=async()=>{await fetch("/api/index?r=login",{method:"DELETE"});location.href="/#owner"};
 let CUR="USD",media=[],books=[];
 const money=n=>(+n||0).toFixed(2)+" "+CUR;
 document.querySelectorAll(".t").forEach(b=>b.onclick=()=>{["m","b","v"].forEach(k=>$("p-"+k).hidden=k!==b.dataset.t);document.querySelectorAll(".t").forEach(c=>c.setAttribute("aria-pressed",c===b))});
 $("file").onchange=()=>{$("fn").textContent=$("file").files[0]?$("file").files[0].name:""};
 function drawM(){$("ml").innerHTML=media.length?media.map(m=>`<div class="c">${m.type==="video"?`<video src="${esc(m.url)}" controls playsinline preload="metadata" style="width:100%;aspect-ratio:4/5;object-fit:cover"></video>`:`<img src="${esc(m.url)}" alt="" style="width:100%;aspect-ratio:4/5;object-fit:cover">`}<b>${esc(m.title)}</b><span>${esc(m.desc)}</span><span>${m.price?esc(m.price)+" "+CUR:""}</span><button data-del="${m.id}">Delete</button></div>`).join(""):"Nothing yet."}
-$("ml").onclick=async e=>{const id=e.target.dataset.del;if(!id)return;if(!e.target.dataset.s){e.target.dataset.s=1;e.target.textContent="Tap again to delete";return}await api("DELETE","/api/media?id="+id);load()};
+$("ml").onclick=async e=>{const id=e.target.dataset.del;if(!id)return;if(!e.target.dataset.s){e.target.dataset.s=1;e.target.textContent="Tap again to delete";return}await api("DELETE","/api/index?r=media&id="+id);load()};
 $("add").onclick=async()=>{const f=$("file").files[0],t=$("title").value.trim(),ms=$("ms");if(!f||!t){ms.textContent="Choose a file and add a title.";return}
  ms.textContent="Uploading… keep this page open.";$("add").disabled=true;
- try{const bl=await upload(f.name,f,{access:"public",handleUploadUrl:"/api/upload",contentType:f.type});
-  await api("POST","/api/media",{url:bl.url,type:f.type.startsWith("video")?"video":"image",title:t,desc:$("desc").value,price:$("price").value});
+ try{const bl=await upload(f.name,f,{access:"public",handleUploadUrl:"/api/index?r=upload",contentType:f.type});
+  await api("POST","/api/index?r=media",{url:bl.url,type:f.type.startsWith("video")?"video":"image",title:t,desc:$("desc").value,price:$("price").value});
   ["file","title","desc","price"].forEach(i=>$(i).value="");$("fn").textContent="";ms.textContent="Published. Clients can see it now.";load()}
  catch(e){ms.textContent="Upload failed: "+(e&&e.message||"try again")}$("add").disabled=false};
 const SO=["New","Confirmed","Completed","Cancelled"];
 function drawB(){$("bl").innerHTML=books.length?books.map(b=>{const c=esc(b.contact),tel=/^[+\d\s()-]{7,}$/.test(b.contact)?`<a class="b" href="https://wa.me/${b.contact.replace(/\D/g,"")}" target="_blank" rel="noopener">WhatsApp</a> <a class="b" href="tel:${c}">Call</a>`:`<a class="b" href="mailto:${c}">Email</a>`;
  return `<div class="c"><b style="font-size:19px">${esc(b.name)}</b><span>${c}</span><span>${esc(b.placement)} · ${esc(b.style)} · ${esc(b.time)}</span><span><b>${b.dates.join(", ")}</b></span>${b.notes?`<span>${esc(b.notes)}</span>`:""}<span>${money(b.total)} · ${b.paid?`<b style="color:#1a7a3a">PAID${b.paidVia?" ("+b.paidVia+")":""}</b>`:"<b>Unpaid</b>"}</span>
  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><select data-st="${b.id}" style="width:auto">${SO.map(o=>`<option${o===b.status?" selected":""}>${o}</option>`).join("")}</select><button data-pd="${b.id}">${b.paid?"Mark unpaid":"Mark paid"}</button>${tel}<button data-rm="${b.id}">Delete</button></div></div>`}).join(""):"No bookings yet."}
-$("bl").onchange=async e=>{if(e.target.dataset.st){await api("PATCH","/api/bookings",{id:e.target.dataset.st,status:e.target.value});load()}};
-$("bl").onclick=async e=>{const d=e.target.dataset;if(d.pd){const b=books.find(x=>x.id===d.pd);await api("PATCH","/api/bookings",{id:d.pd,paid:!b.paid});load()}
- if(d.rm){if(!d.s){e.target.dataset.s=1;e.target.textContent="Tap again to delete";return}await api("DELETE","/api/bookings?id="+d.rm);load()}};
+$("bl").onchange=async e=>{if(e.target.dataset.st){await api("PATCH","/api/index?r=bookings",{id:e.target.dataset.st,status:e.target.value});load()}};
+$("bl").onclick=async e=>{const d=e.target.dataset;if(d.pd){const b=books.find(x=>x.id===d.pd);await api("PATCH","/api/index?r=bookings",{id:d.pd,paid:!b.paid});load()}
+ if(d.rm){if(!d.s){e.target.dataset.s=1;e.target.textContent="Tap again to delete";return}await api("DELETE","/api/index?r=bookings&id="+d.rm);load()}};
 function drawV(){const paid=books.filter(b=>b.paid),amt=b=>+b.paidAmount||+b.total||0,now=new Date(),mk=t=>{const d=new Date(t);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")};
  const tot=paid.reduce((s,b)=>s+amt(b),0),cur=mk(now),mo=paid.filter(b=>mk(b.paidAt||b.created)===cur).reduce((s,b)=>s+amt(b),0),pend=books.filter(b=>!b.paid&&b.status!=="Cancelled").reduce((s,b)=>s+(+b.total||0),0);
  const rows={};paid.forEach(b=>{const k=mk(b.paidAt||b.created);rows[k]=(rows[k]||{n:0,s:0});rows[k].n++;rows[k].s+=amt(b)});
  $("rv").innerHTML=`<div class="g"><div class="c"><span class="s">Total earned</span><span class="k">${money(tot)}</span></div><div class="c"><span class="s">This month</span><span class="k">${money(mo)}</span></div><div class="c"><span class="s">Pending deposits</span><span class="k">${money(pend)}</span></div><div class="c"><span class="s">Paid bookings</span><span class="k">${paid.length}</span></div></div>
  <h2 style="margin:24px 0 12px;font-size:20px">By month</h2><table><tr><th>Month</th><th>Paid bookings</th><th>Earned</th></tr>${Object.keys(rows).sort().reverse().map(k=>`<tr><td>${k}</td><td>${rows[k].n}</td><td>${money(rows[k].s)}</td></tr>`).join("")||"<tr><td colspan=3>No payments yet.</td></tr>"}</table>`}
 function badge(){const n=books.filter(b=>b.status==="New").length;document.querySelector('[data-t="b"]').textContent="Bookings"+(n?" ("+n+" new)":"")}
-async function load(){const[m,b]=await Promise.all([api("GET","/api/media"),api("GET","/api/bookings")]);media=m.items;CUR=m.currency||CUR;books=b;drawM();drawB();drawV();badge()}
-setInterval(async()=>{if(document.hidden||$("app").hidden)return;try{books=await api("GET","/api/bookings");drawB();drawV();badge()}catch(e){}},20000);
-(async()=>{try{await api("GET","/api/login");$("app").hidden=false;load()}catch(e){}})();
+async function load(){const[m,b]=await Promise.all([api("GET","/api/index?r=media"),api("GET","/api/index?r=bookings")]);media=m.items;CUR=m.currency||CUR;books=b;drawM();drawB();drawV();badge()}
+setInterval(async()=>{if(document.hidden||$("app").hidden)return;try{books=await api("GET","/api/index?r=bookings");drawB();drawV();badge()}catch(e){}},20000);
+(async()=>{try{await api("GET","/api/index?r=login");$("app").hidden=false;load()}catch(e){}})();
 </script></body></html>

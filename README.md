@@ -22,7 +22,7 @@ ADMIN_PASSWORD, SESSION_SECRET (long random string), SKRILL_EMAIL, SKRILL_SECRET
 
 ## Check it worked
 - `/` must show the Prince Tattoos website.
-- `/api/health` must show JSON like {"site":"ok","redis":true,...}. A `false` means that setting is missing.
+- `/api/index?r=health` must show JSON like {"site":"ok","redis":true,...}. A `false` means that setting is missing.
 - Owner: scroll to the bottom of `/` → "Owner login".
 
 ## Skrill

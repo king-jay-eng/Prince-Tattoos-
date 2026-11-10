@@ -64,7 +64,7 @@ opts($("style"),["Custom idea","Blackwork","Fine-line","Floral","Geometric","Jap
 opts($("time"),["12:00","13:00","14:00","15:00","16:00","17:00","18:00"]);
 var q=location.search;if(/paid=1/.test(q)||/cancelled=1/.test(q)){var b=$("banner");b.hidden=false;b.firstChild.textContent=/paid=1/.test(q)?"Thank you! We’ll confirm your booking on WhatsApp shortly.":"Payment cancelled. Your dates aren’t locked in yet.";}
 // gallery
-fetch("/api/media").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){CUR=d.currency||CUR;DEP=d.deposit||DEP;sum();var L=d.items||[];
+fetch("/api/index?r=media").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){CUR=d.currency||CUR;DEP=d.deposit||DEP;sum();var L=d.items||[];
  $("lgrid").innerHTML=L.map(function(m,i){var md=m.type==="video"?'<video src="'+esc(m.url)+'" controls playsinline preload="metadata" style="width:100%;aspect-ratio:4/5;object-fit:cover;background:#000"></video>':'<img src="'+esc(m.url)+'" alt="'+esc(m.title)+'" loading="lazy" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">';
   return '<div class="cell">'+md+'<div style="padding:16px;display:flex;flex-direction:column;gap:6px"><h3 class="slab" style="font-size:22px">'+esc(m.title)+'</h3><p style="margin:0">'+esc(m.desc)+'</p>'+(m.price?'<b>'+esc(m.price)+' '+CUR+'</b>':"")+'<button class="btn red" data-b="'+i+'" style="margin-top:8px">Book this</button></div></div>'}).join("")||'<p style="grid-column:1/-1;margin:0;font-size:18px">New work is on its way. Message us on WhatsApp to see current designs.</p>';
  $("lgrid").onclick=function(e){var k=e.target.getAttribute("data-b");if(k===null)return;var m=L[+k];$("notes").value="Design: "+m.title+(m.price?" ("+m.price+" "+CUR+")":"");$("book").scrollIntoView()}}).catch(function(){$("lgrid").innerHTML="<p style=\"grid-column:1/-1;margin:0\">The gallery couldn’t load. Please refresh, or message us on WhatsApp.</p>"});
@@ -85,7 +85,7 @@ function sum(){var d=dates();$("sum").innerHTML=d.length?d.map(fmt).join(" · ")
 function say(t){$("msg").textContent=t}
 async function save(){if(!$("name").value.trim()||!$("contact").value.trim()){say("Please add your name and phone or email.");return null}
  if(!dates().length){say("Please tap at least one date.");return null}say("Saving…");
- try{var r=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("name").value,contact:$("contact").value,placement:$("place").value,style:$("style").value,time:$("time").value,notes:$("notes").value,dates:dates()})});
+ try{var r=await fetch("/api/index?r=bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("name").value,contact:$("contact").value,placement:$("place").value,style:$("style").value,time:$("time").value,notes:$("notes").value,dates:dates()})});
   var j=await r.json();if(!r.ok){say(j.error||"Couldn’t save your booking.");return null}say("");return j}catch(e){say("Couldn’t reach the server. Try again.");return null}}
 $("pay").onclick=async function(){var j=await save();if(!j)return;
  if(!j.skrill){say("Booking saved. Message us on WhatsApp to pay your deposit.");return}
@@ -99,6 +99,6 @@ function openOwn(){$("ownf").hidden=false;$("ownf").scrollIntoView();$("opw").fo
 if(location.hash==="#owner")setTimeout(openOwn,300);
 $("ownb").onclick=function(){var f=$("ownf");f.hidden=!f.hidden;if(!f.hidden){f.scrollIntoView();$("opw").focus()}};
 $("of").onsubmit=async function(e){e.preventDefault();var m=$("om");m.textContent="Checking…";
- try{var r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:$("opw").value})}),j={};try{j=await r.json()}catch(z){}
-  if(r.ok)location.href="/admin";else m.textContent=r.status===404?"The server part isn’t deployed yet.":(j.error||"Server error ("+r.status+").")}catch(x){m.textContent="Couldn’t reach the server."}};
+ try{var r=await fetch("/api/index?r=login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:$("opw").value})}),j={};try{j=await r.json()}catch(z){}
+  if(r.ok)location.href="/admin";else m.textContent=r.status===404?"The server file api/index.js isn’t deployed yet.":(j.error||"Server error ("+r.status+").")}catch(x){m.textContent="Couldn’t reach the server."}};
 </script></body></html>
