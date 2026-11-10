@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prince Tattoos</title><meta name="description" content="Custom tattooing by appointment. Choose your dates and book online.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Mono:wght@500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#efe6d2;--fg:#141210;--card:#f7f0df;--red:#b32a17;--gold:#e3b93c;--ink:#141210;--paper:#efe6d2}
+@media (prefers-color-scheme:dark){:root{--bg:#141210;--fg:#efe6d2;--card:#1f1c19;--red:#e0523d}}
+*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 17px/1.55 'DM Sans',sans-serif}
+a{color:inherit;text-decoration:none}a:hover{color:var(--red)}
+.slab{font-family:'Alfa Slab One',Georgia,serif;font-weight:400;text-transform:uppercase;margin:0}
+.mono{font:500 12px 'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border:3px solid var(--fg);font:700 16px 'DM Sans',sans-serif;box-shadow:4px 4px 0 var(--fg);cursor:pointer;background:var(--bg);color:var(--fg)}
+.btn:hover{background:var(--gold);color:var(--ink)}.red{background:var(--red);color:#fff}.red:hover{background:var(--ink);color:#fff}
+.f{display:flex;flex-direction:column;gap:6px}
+select,input,textarea{min-height:48px;border:2px solid var(--paper);background:#fff;color:#141210;padding:0 12px;font:500 16px 'DM Sans',sans-serif;width:100%}
+label{font:500 12px 'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.cell{border:3px solid var(--fg);background:var(--card);display:flex;flex-direction:column}
+#cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+#cal button{min-height:44px;border:0;background:#2b2723;color:var(--paper);font:500 15px 'DM Sans',sans-serif;cursor:pointer}
+#cal button:disabled{background:transparent;color:#6f675c;cursor:not-allowed}#cal button.on{background:var(--gold);color:var(--ink);font-weight:700}
+</style></head><body>
+<div class="mono" style="background:var(--ink);color:var(--paper);padding:10px 0"><div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px"><span>Open daily · 12–8</span><a href="https://wa.me/447826700032">WhatsApp +44 7826 700032</a></div></div>
+<header class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-top:18px;padding-bottom:18px">
+<a class="slab" href="#top" style="font-size:28px">Prince Tattoos</a>
+<nav style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;font-weight:700"><a href="#gallery" style="min-height:44px;display:inline-flex;align-items:center">Gallery</a><a href="#contact" style="min-height:44px;display:inline-flex;align-items:center">Contact</a><a class="btn red" href="#book" style="min-height:44px;box-shadow:3px 3px 0 var(--fg)">Book a session</a></nav></header>
+<div id="banner" class="wrap" hidden><p style="margin:0 0 16px;padding:14px 18px;background:var(--gold);color:var(--ink);font-weight:700"></p></div>
+<section id="top" class="wrap" style="padding-top:clamp(32px,6vw,80px);padding-bottom:clamp(40px,7vw,96px);display:flex;flex-direction:column;gap:26px">
+<span class="mono" style="color:var(--red)">Custom tattooing · By appointment</span>
+<h1 class="slab" style="font-size:clamp(48px,10vw,128px);line-height:.95">Pick it.<br>Pick a day.<br><span style="color:var(--red)">Sit down.</span></h1>
+<p style="margin:0;font-size:20px;max-width:520px">Browse the gallery, choose your dates and pay your deposit online with Skrill. Questions? We’re on WhatsApp.</p>
+<div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="#book">Choose your dates</a><a class="btn" href="#gallery">Browse the gallery</a><a class="btn" href="https://wa.me/447826700032" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook</a></div></section>
+<section id="gallery" class="wrap" style="padding-bottom:80px"><h2 class="slab" style="font-size:clamp(34px,6vw,60px);margin-bottom:24px">The gallery</h2>
+<div id="lgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px"></div></section>
+<section id="book" style="background:var(--ink);color:var(--paper);padding:72px 0"><div class="wrap">
+<h2 class="slab" style="font-size:clamp(34px,6vw,60px);color:var(--paper)">Book your sessions</h2>
+<p style="max-width:560px">Tap each date you want a session on. Open every day, 12:00–20:00, from tomorrow onwards. Pay the deposit with Skrill to lock them in.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;margin-top:28px">
+<div class="f" style="gap:16px">
+<div class="f"><label for="name">Your name</label><input id="name" autocomplete="name"></div>
+<div class="f"><label for="contact">Phone or email</label><input id="contact" autocomplete="tel"></div>
+<div class="f"><label for="place">Placement</label><select id="place"></select></div>
+<div class="f"><label for="style">Style</label><select id="style"></select></div>
+<div class="f"><label for="time">Start time</label><select id="time"></select></div>
+<div class="f"><label for="notes">Notes or idea (optional)</label><textarea id="notes" rows="3" style="padding:10px 12px"></textarea></div></div>
+<div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+<button class="btn" id="prev" aria-label="Previous month" style="min-height:44px;padding:0 16px;box-shadow:none">←</button><span class="slab" id="mon" style="font-size:22px"></span><button class="btn" id="next" aria-label="Next month" style="min-height:44px;padding:0 16px;box-shadow:none">→</button></div>
+<div id="cal"></div></div></div>
+<div style="margin-top:32px;border:3px dashed var(--gold);padding:24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
+<div class="f"><span class="mono" style="color:var(--gold)">Your booking</span><div id="sum" style="font-size:18px"></div><div id="msg" role="status" style="color:var(--gold);font-weight:700"></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:16px"><button class="btn red" id="pay" style="border-color:var(--paper);box-shadow:4px 4px 0 var(--gold)">Pay deposit with Skrill</button><button class="btn" id="wa" style="box-shadow:4px 4px 0 var(--gold)">Book via WhatsApp</button></div></div></div></section>
+<section id="contact" class="wrap" style="padding:72px clamp(16px,4vw,48px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px"><h2 class="slab" style="font-size:clamp(34px,6vw,60px)">Say hello</h2>
+<div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="https://wa.me/447826700032" target="_blank" rel="noopener">WhatsApp +44 7826 700032</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook page</a></div></section>
+<footer class="mono wrap" style="padding-top:20px;padding-bottom:28px;border-top:3px solid var(--fg);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px"><span>Prince Tattoos</span><span style="display:flex;flex-wrap:wrap;gap:8px 22px"><button id="ownb" style="background:none;border:0;padding:0;min-height:44px;font:inherit;color:inherit;cursor:pointer;text-decoration:underline">Owner login</button><a href="#top" style="min-height:44px;display:inline-flex;align-items:center">Back to top ↑</a></span></footer>
+<div id="ownf" class="wrap" hidden style="padding-bottom:32px"><form id="of" style="display:flex;flex-wrap:wrap;gap:10px;max-width:460px"><input id="opw" type="password" placeholder="Owner password" autocomplete="current-password" style="flex:1;min-width:180px"><button class="btn red" style="box-shadow:none">Sign in</button><div id="om" role="status" style="width:100%;font-weight:700"></div></form></div>
+<script>
+var $=function(i){return document.getElementById(i)},CUR="USD",DEP=50,WA="447826700032";
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function opts(el,l){el.innerHTML=l.map(function(x){return "<option>"+x+"</option>"}).join("")}
+opts($("place"),["Not sure yet","Forearm","Upper arm","Full sleeve","Shoulder","Chest","Ribs","Back","Hand","Fingers","Neck","Thigh","Calf","Ankle","Foot","Full body"]);
+opts($("style"),["Custom idea","Blackwork","Fine-line","Floral","Geometric","Japanese","Lettering","Minimalist","Realism","Traditional American","Tribal"]);
+opts($("time"),["12:00","13:00","14:00","15:00","16:00","17:00","18:00"]);
+var q=location.search;if(/paid=1/.test(q)||/cancelled=1/.test(q)){var b=$("banner");b.hidden=false;b.firstChild.textContent=/paid=1/.test(q)?"Thank you! We’ll confirm your booking on WhatsApp shortly.":"Payment cancelled. Your dates aren’t locked in yet.";}
+// gallery
+fetch("/api/media").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){CUR=d.currency||CUR;DEP=d.deposit||DEP;sum();var L=d.items||[];
+ $("lgrid").innerHTML=L.map(function(m,i){var md=m.type==="video"?'<video src="'+esc(m.url)+'" controls playsinline preload="metadata" style="width:100%;aspect-ratio:4/5;object-fit:cover;background:#000"></video>':'<img src="'+esc(m.url)+'" alt="'+esc(m.title)+'" loading="lazy" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">';
+  return '<div class="cell">'+md+'<div style="padding:16px;display:flex;flex-direction:column;gap:6px"><h3 class="slab" style="font-size:22px">'+esc(m.title)+'</h3><p style="margin:0">'+esc(m.desc)+'</p>'+(m.price?'<b>'+esc(m.price)+' '+CUR+'</b>':"")+'<button class="btn red" data-b="'+i+'" style="margin-top:8px">Book this</button></div></div>'}).join("")||'<p style="grid-column:1/-1;margin:0;font-size:18px">New work is on its way. Message us on WhatsApp to see current designs.</p>';
+ $("lgrid").onclick=function(e){var k=e.target.getAttribute("data-b");if(k===null)return;var m=L[+k];$("notes").value="Design: "+m.title+(m.price?" ("+m.price+" "+CUR+")":"");$("book").scrollIntoView()}}).catch(function(){$("lgrid").innerHTML="<p style=\"grid-column:1/-1;margin:0\">The gallery couldn’t load. Please refresh, or message us on WhatsApp.</p>"});
+// calendar
+var sel={},view=new Date();view.setDate(1);
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function drawCal(){var y=view.getFullYear(),m=view.getMonth(),n=new Date(y,m+1,0).getDate(),off=(new Date(y,m,1).getDay()+6)%7,t=new Date();t.setHours(0,0,0,0);
+ $("mon").textContent=view.toLocaleString("en-GB",{month:"long",year:"numeric"});
+ var h=["Mo","Tu","We","Th","Fr","Sa","Su"].map(function(d){return '<span class="mono" style="padding:8px 0">'+d+'</span>'}).join("");
+ for(var i=0;i<off;i++)h+="<span></span>";
+ for(var d=1;d<=n;d++){var dt=new Date(y,m,d),k=iso(dt),ok=dt>t;h+='<button data-d="'+k+'"'+(ok?"":" disabled")+(sel[k]?' class="on" aria-pressed="true"':"")+'>'+d+'</button>'}
+ $("cal").innerHTML=h;sum()}
+$("cal").onclick=function(e){var k=e.target.getAttribute("data-d");if(!k)return;if(sel[k])delete sel[k];else sel[k]=1;drawCal()};
+$("prev").onclick=function(){view.setMonth(view.getMonth()-1);drawCal()};$("next").onclick=function(){view.setMonth(view.getMonth()+1);drawCal()};
+function dates(){return Object.keys(sel).sort()}
+function fmt(k){return new Date(k+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"})}
+function sum(){var d=dates();$("sum").innerHTML=d.length?d.map(fmt).join(" · ")+"<br><b>"+d.length+" session"+(d.length>1?"s":"")+" × "+DEP+" "+CUR+" deposit = "+d.length*DEP+" "+CUR+"</b>":"No dates chosen yet."}
+function say(t){$("msg").textContent=t}
+async function save(){if(!$("name").value.trim()||!$("contact").value.trim()){say("Please add your name and phone or email.");return null}
+ if(!dates().length){say("Please tap at least one date.");return null}say("Saving…");
+ try{var r=await fetch("/api/bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("name").value,contact:$("contact").value,placement:$("place").value,style:$("style").value,time:$("time").value,notes:$("notes").value,dates:dates()})});
+  var j=await r.json();if(!r.ok){say(j.error||"Couldn’t save your booking.");return null}say("");return j}catch(e){say("Couldn’t reach the server. Try again.");return null}}
+$("pay").onclick=async function(){var j=await save();if(!j)return;
+ if(!j.skrill){say("Booking saved. Message us on WhatsApp to pay your deposit.");return}
+ var f=document.createElement("form");f.method="POST";f.action=j.skrill.url;
+ Object.keys(j.skrill.fields).forEach(function(k){var i=document.createElement("input");i.type="hidden";i.name=k;i.value=j.skrill.fields[k];f.appendChild(i)});document.body.appendChild(f);f.submit()};
+$("wa").onclick=async function(){var j=await save();if(!j)return;
+ var t="Hi Prince Tattoos, I’d like to book (ref "+j.id+"). Name: "+$("name").value+". Placement: "+$("place").value+". Style: "+$("style").value+". Dates: "+dates().map(fmt).join(", ")+" at "+$("time").value+"."+($("notes").value?" "+$("notes").value:"");
+ location.href="https://wa.me/"+WA+"?text="+encodeURIComponent(t)};
+drawCal();
+function openOwn(){$("ownf").hidden=false;$("ownf").scrollIntoView();$("opw").focus()}
+if(location.hash==="#owner")setTimeout(openOwn,300);
+$("ownb").onclick=function(){var f=$("ownf");f.hidden=!f.hidden;if(!f.hidden){f.scrollIntoView();$("opw").focus()}};
+$("of").onsubmit=async function(e){e.preventDefault();var m=$("om");m.textContent="Checking…";
+ try{var r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:$("opw").value})}),j={};try{j=await r.json()}catch(z){}
+  if(r.ok)location.href="/admin";else m.textContent=r.status===404?"The server part isn’t deployed yet.":(j.error||"Server error ("+r.status+").")}catch(x){m.textContent="Couldn’t reach the server."}};
+</script></body></html>
