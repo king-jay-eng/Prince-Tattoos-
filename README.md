@@ -32,3 +32,10 @@ Without SKRILL_EMAIL the site still saves bookings and offers WhatsApp instead.
 - Gallery: admin uploads from the phone/computer (image or video, up to 300 MB), adds price + description.
 - Bookings: every request is saved with name, phone/email, placement, style, dates, notes.
 - Revenue: totals from paid bookings (Skrill or marked paid by hand).
+
+## Troubleshooting
+- Open `https://YOUR-SITE/api/health` — it must show JSON like `{"site":"ok","redis":true,...}`.
+  - **404** = the `api` folder was not deployed. `api/`, `lib/`, `package.json` and `index.html` must sit at the ROOT of the repo (not inside another folder), and Vercel → Settings → General → Root Directory must be empty.
+  - Any value showing `false` = that setting is missing; add it and redeploy.
+- Owner login: scroll to the bottom of the home page → "Owner login", or go to /admin/login.
+- Bookings are saved automatically from the booking form. New ones show on the Bookings tab within 20 seconds.
