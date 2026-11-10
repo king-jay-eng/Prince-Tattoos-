@@ -31,7 +31,9 @@ function drawM(){$("ml").innerHTML=media.length?media.map(m=>`<div class="c">${m
 $("ml").onclick=async e=>{const id=e.target.dataset.del;if(!id)return;if(!e.target.dataset.s){e.target.dataset.s=1;e.target.textContent="Tap again to delete";return}await api("DELETE","/api/index?r=media&id="+id);load()};
 $("add").onclick=async()=>{const f=$("file").files[0],t=$("title").value.trim(),ms=$("ms");if(!f||!t){ms.textContent="Choose a file and add a title.";return}
  ms.textContent="Uploading… keep this page open.";$("add").disabled=true;
- try{const bl=await upload(f.name,f,{access:"public",handleUploadUrl:"/api/index?r=upload",contentType:f.type});
+ try{const pr=await fetch("/api/index?r=upload",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"blob.generate-client-token",payload:{pathname:f.name,clientPayload:null,multipart:false,callbackUrl:location.origin+"/api/index?r=upload"}})});
+  if(!pr.ok){let pj={};try{pj=await pr.json()}catch(z){}throw new Error(pj.error||("server answered "+pr.status))}
+  const bl=await upload(f.name,f,{access:"public",handleUploadUrl:"/api/index?r=upload",contentType:f.type});
   await api("POST","/api/index?r=media",{url:bl.url,type:f.type.startsWith("video")?"video":"image",title:t,desc:$("desc").value,price:$("price").value});
   ["file","title","desc","price"].forEach(i=>$(i).value="");$("fn").textContent="";ms.textContent="Published. Clients can see it now.";load()}
  catch(e){ms.textContent="Upload failed: "+(e&&e.message||"try again")}$("add").disabled=false};
