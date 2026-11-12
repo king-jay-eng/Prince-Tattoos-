@@ -64,10 +64,33 @@ opts($("style"),["Custom idea","Blackwork","Fine-line","Floral","Geometric","Jap
 opts($("time"),["12:00","13:00","14:00","15:00","16:00","17:00","18:00"]);
 var q=location.search;if(/paid=1/.test(q)||/cancelled=1/.test(q)){var b=$("banner");b.hidden=false;b.firstChild.textContent=/paid=1/.test(q)?"Thank you! We’ll confirm your booking on WhatsApp shortly.":"Payment cancelled. Your dates aren’t locked in yet.";}
 // gallery
-fetch("/api/index?r=media").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){CUR=d.currency||CUR;DEP=d.deposit||DEP;sum();var L=d.items||[];
- $("lgrid").innerHTML=L.map(function(m,i){var md=m.type==="video"?'<video src="'+esc(m.url)+'" controls playsinline preload="metadata" style="width:100%;aspect-ratio:4/5;object-fit:cover;background:#000"></video>':'<img src="'+esc(m.url)+'" alt="'+esc(m.title)+'" loading="lazy" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">';
-  return '<div class="cell">'+md+'<div style="padding:16px;display:flex;flex-direction:column;gap:6px"><h3 class="slab" style="font-size:22px">'+esc(m.title)+'</h3><p style="margin:0">'+esc(m.desc)+'</p>'+(m.price?'<b>'+esc(m.price)+' '+CUR+'</b>':"")+'<button class="btn red" data-b="'+i+'" style="margin-top:8px">Book this</button></div></div>'}).join("")||'<p style="grid-column:1/-1;margin:0;font-size:18px">New work is on its way. Message us on WhatsApp to see current designs.</p>';
- $("lgrid").onclick=function(e){var k=e.target.getAttribute("data-b");if(k===null)return;var m=L[+k];$("notes").value="Design: "+m.title+(m.price?" ("+m.price+" "+CUR+")":"");$("book").scrollIntoView()}}).catch(function(){$("lgrid").innerHTML="<p style=\"grid-column:1/-1;margin:0\">The gallery couldn’t load. Please refresh, or message us on WhatsApp.</p>"});
+var SEED=[
+ {"url": "/g01.jpg", "type": "image", "title": "Heart Clover", "desc": "Fine-line · Shoulder", "price": "150", "pos": "50% 50%"},
+ {"url": "/g02.jpg", "type": "image", "title": "Snake & Peony", "desc": "Traditional · Forearm", "price": "650", "pos": "55% 50%"},
+ {"url": "/g03.jpg", "type": "image", "title": "Floral Back Crest", "desc": "Blackwork & colour · Back piece", "price": "1600", "pos": "50% 40%"},
+ {"url": "/g04.jpg", "type": "image", "title": "Tiger & Blooms", "desc": "Neo-traditional · Upper arm", "price": "900", "pos": "50% 50%"},
+ {"url": "/g05.jpg", "type": "image", "title": "Twin Koi Sleeve", "desc": "Japanese · Half sleeve", "price": "1400", "pos": "47% 50%"},
+ {"url": "/g06.jpg", "type": "image", "title": "Clockwork Filigree", "desc": "Black & grey · Forearm", "price": "700", "pos": "50% 50%"},
+ {"url": "/g07.jpg", "type": "image", "title": "Script Name", "desc": "Lettering · Forearm", "price": "100", "pos": "49% 55%"},
+ {"url": "/g08.jpg", "type": "image", "title": "Tribal Shoulder Piece", "desc": "Tribal · Shoulder & arm", "price": "850", "pos": "55% 50%"},
+ {"url": "/g09.jpg", "type": "image", "title": "Script & Laurel", "desc": "Lettering · Chest & hand", "price": "250", "pos": "50% 50%"},
+ {"url": "/g10.jpg", "type": "image", "title": "Anchor & Rose", "desc": "Traditional American · Calf or forearm", "price": "450", "pos": "50% 50%"},
+ {"url": "/g11.jpg", "type": "image", "title": "Creation Hands", "desc": "Fine-line · Forearm", "price": "220", "pos": "55% 50%"},
+ {"url": "/g12.jpg", "type": "image", "title": "Lighthouse Arrowhead", "desc": "Traditional · Forearm", "price": "500", "pos": "50% 50%"},
+ {"url": "/g13.jpg", "type": "image", "title": "Black Floral Collar", "desc": "Blackwork · Chest & shoulders", "price": "1200", "pos": "50% 50%"},
+ {"url": "/g14.jpg", "type": "image", "title": "Twin Tigers Yantra", "desc": "Sak Yant linework · Upper back", "price": "400", "pos": "50% 50%"},
+ {"url": "/g15.jpg", "type": "image", "title": "Swirl Linework", "desc": "Linework · Forearm", "price": "480", "pos": "31% 50%"},
+ {"url": "/g16.jpg", "type": "image", "title": "Lion & Gladiator", "desc": "Realism · Forearm", "price": "950", "pos": "50% 50%"},
+ {"url": "/g17.jpg", "type": "image", "title": "Wildflower Wrap", "desc": "Fine-line floral · Forearm", "price": "380", "pos": "60% 50%"},
+ {"url": "/g18.jpg", "type": "image", "title": "Colour Charm Circle", "desc": "Minimalist colour · Shoulder", "price": "350", "pos": "50% 50%"},
+ {"url": "/g19.jpg", "type": "image", "title": "Mandala Sleeve", "desc": "Geometric dotwork · Full sleeve", "price": "1500", "pos": "50% 50%"}
+];
+function showGallery(extra){var L=extra.concat(SEED);
+ $("lgrid").innerHTML=L.map(function(m,i){var md=m.type==="video"?'<video src="'+esc(m.url)+'" controls playsinline preload="metadata" style="width:100%;aspect-ratio:4/5;object-fit:cover;background:#000"></video>':'<img src="'+esc(m.url)+'" alt="'+esc(m.title)+'" loading="lazy" style="width:100%;aspect-ratio:4/5;object-fit:cover;object-position:'+esc(m.pos||"50% 50%")+';display:block">';
+  return '<div class="cell">'+md+'<div style="padding:16px;display:flex;flex-direction:column;gap:6px"><h3 class="slab" style="font-size:22px">'+esc(m.title)+'</h3><p style="margin:0">'+esc(m.desc)+'</p>'+(m.price?'<b>'+esc(m.price)+' '+CUR+'</b>':"")+'<button class="btn red" data-b="'+i+'" style="margin-top:8px">Book this</button></div></div>'}).join("");
+ $("lgrid").onclick=function(e){var k=e.target.getAttribute("data-b");if(k===null)return;var m=L[+k];$("notes").value="Design: "+m.title+(m.price?" ("+m.price+" "+CUR+")":"");$("book").scrollIntoView()}}
+showGallery([]);
+fetch("/api/index?r=media").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){CUR=d.currency||CUR;DEP=d.deposit||DEP;sum();showGallery(d.items||[])}).catch(function(){});
 // calendar
 var sel={},view=new Date();view.setDate(1);
 function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
