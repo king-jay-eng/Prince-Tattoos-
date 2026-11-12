@@ -30,13 +30,13 @@ label{font:500 12px 'DM Mono',monospace;letter-spacing:.1em;text-transform:upper
 <section id="top" class="wrap" style="padding-top:clamp(32px,6vw,80px);padding-bottom:clamp(40px,7vw,96px);display:flex;flex-direction:column;gap:26px">
 <span class="mono" style="color:var(--red)">Custom tattooing · By appointment</span>
 <h1 class="slab" style="font-size:clamp(48px,10vw,128px);line-height:.95">Pick it.<br>Pick a day.<br><span style="color:var(--red)">Sit down.</span></h1>
-<p style="margin:0;font-size:20px;max-width:520px">Browse the gallery, choose your dates and pay your deposit online with Skrill. Questions? We’re on WhatsApp.</p>
+<p style="margin:0;font-size:20px;max-width:520px">Browse the gallery, choose your dates and confirm your booking on WhatsApp. Questions? Message us any time.</p>
 <div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="#book">Choose your dates</a><a class="btn" href="#gallery">Browse the gallery</a><a class="btn" href="https://wa.me/447826700032" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook</a></div></section>
 <section id="gallery" class="wrap" style="padding-bottom:80px"><h2 class="slab" style="font-size:clamp(34px,6vw,60px);margin-bottom:24px">The gallery</h2>
 <div id="lgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px"></div></section>
 <section id="book" style="background:var(--ink);color:var(--paper);padding:72px 0"><div class="wrap">
 <h2 class="slab" style="font-size:clamp(34px,6vw,60px);color:var(--paper)">Book your sessions</h2>
-<p style="max-width:560px">Tap each date you want a session on. Open every day, 12:00–20:00, from tomorrow onwards. Pay the deposit with Skrill to lock them in.</p>
+<p style="max-width:560px">Tap each date you want a session on. Open every day, 12:00–20:00, from tomorrow onwards. Then tap Checkout on WhatsApp to confirm and arrange your deposit.</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;margin-top:28px">
 <div class="f" style="gap:16px">
 <div class="f"><label for="name">Your name</label><input id="name" autocomplete="name"></div>
@@ -50,7 +50,7 @@ label{font:500 12px 'DM Mono',monospace;letter-spacing:.1em;text-transform:upper
 <div id="cal"></div></div></div>
 <div style="margin-top:32px;border:3px dashed var(--gold);padding:24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px">
 <div class="f"><span class="mono" style="color:var(--gold)">Your booking</span><div id="sum" style="font-size:18px"></div><div id="msg" role="status" style="color:var(--gold);font-weight:700"></div></div>
-<div style="display:flex;flex-wrap:wrap;gap:16px"><button class="btn red" id="pay" style="border-color:var(--paper);box-shadow:4px 4px 0 var(--gold)">Pay deposit with Skrill</button><button class="btn" id="wa" style="box-shadow:4px 4px 0 var(--gold)">Book via WhatsApp</button></div></div></div></section>
+<div style="display:flex;flex-wrap:wrap;gap:16px"><button class="btn red" id="wa" style="border-color:var(--paper);box-shadow:4px 4px 0 var(--gold)">Checkout on WhatsApp</button></div></div></div></section>
 <section id="contact" class="wrap" style="padding:72px clamp(16px,4vw,48px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px"><h2 class="slab" style="font-size:clamp(34px,6vw,60px)">Say hello</h2>
 <div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="https://wa.me/447826700032" target="_blank" rel="noopener">WhatsApp +44 7826 700032</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook page</a></div></section>
 <footer class="mono wrap" style="padding-top:20px;padding-bottom:28px;border-top:3px solid var(--fg);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px"><span>Prince Tattoos</span><span style="display:flex;flex-wrap:wrap;gap:8px 22px"><button id="ownb" style="background:none;border:0;padding:0;min-height:44px;font:inherit;color:inherit;cursor:pointer;text-decoration:underline">Owner login</button><a href="#top" style="min-height:44px;display:inline-flex;align-items:center">Back to top ↑</a></span></footer>
@@ -86,13 +86,10 @@ function say(t){$("msg").textContent=t}
 async function save(){if(!$("name").value.trim()||!$("contact").value.trim()){say("Please add your name and phone or email.");return null}
  if(!dates().length){say("Please tap at least one date.");return null}say("Saving…");
  try{var r=await fetch("/api/index?r=bookings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("name").value,contact:$("contact").value,placement:$("place").value,style:$("style").value,time:$("time").value,notes:$("notes").value,dates:dates()})});
-  var j=await r.json();if(!r.ok){say(j.error||"Couldn’t save your booking.");return null}say("");return j}catch(e){say("Couldn’t reach the server. Try again.");return null}}
-$("pay").onclick=async function(){var j=await save();if(!j)return;
- if(!j.skrill){say("Booking saved. Message us on WhatsApp to pay your deposit.");return}
- var f=document.createElement("form");f.method="POST";f.action=j.skrill.url;
- Object.keys(j.skrill.fields).forEach(function(k){var i=document.createElement("input");i.type="hidden";i.name=k;i.value=j.skrill.fields[k];f.appendChild(i)});document.body.appendChild(f);f.submit()};
+  var j={};try{j=await r.json()}catch(z){}if(r.status===400){say(j.error||"Please check your details.");return null}say("");return r.ok?j:fb()}catch(e){say("");return fb()}}
+function fb(){return{id:"n/a",total:dates().length*DEP,currency:CUR}}
 $("wa").onclick=async function(){var j=await save();if(!j)return;
- var t="Hi Prince Tattoos, I’d like to book (ref "+j.id+"). Name: "+$("name").value+". Placement: "+$("place").value+". Style: "+$("style").value+". Dates: "+dates().map(fmt).join(", ")+" at "+$("time").value+"."+($("notes").value?" "+$("notes").value:"");
+ var t="Hi Prince Tattoos, I’d like to book (ref "+j.id+"). Name: "+$("name").value+". Placement: "+$("place").value+". Style: "+$("style").value+". Dates: "+dates().map(fmt).join(", ")+" at "+$("time").value+". Deposit: "+j.total+" "+j.currency+"."+($("notes").value?" "+$("notes").value:"");
  location.href="https://wa.me/"+WA+"?text="+encodeURIComponent(t)};
 drawCal();
 function openOwn(){$("ownf").hidden=false;$("ownf").scrollIntoView();$("opw").focus()}
