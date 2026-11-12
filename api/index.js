@@ -5,11 +5,16 @@ const cl = (v, n) => String(v == null ? "" : v).trim().slice(0, n);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
 // ---- storage (Upstash Redis) ----
+// Finds the Redis settings even if Vercel added a prefix (e.g. STORAGE_KV_REST_API_URL).
+const pick = (re) => { const k = Object.keys(E).find((n) => re.test(n)); return k ? E[k] : ""; };
+const redisUrl = () => { const u = pick(/(^|_)(KV_REST_API_URL|UPSTASH_REDIS_REST_URL)$/); return u && !/^https?:\/\//.test(u) ? "https://" + u : u; };
+const redisToken = () => pick(/(^|_)(KV_REST_API_TOKEN|UPSTASH_REDIS_REST_TOKEN)$/);
 let _db;
-const getDb = () => _db || (_db = new (require("@upstash/redis").Redis)({
-  url: E.UPSTASH_REDIS_REST_URL || E.KV_REST_API_URL,
-  token: E.UPSTASH_REDIS_REST_TOKEN || E.KV_REST_API_TOKEN,
-}));
+const getDb = () => {
+  if (_db) return _db;
+  if (!redisUrl() || !redisToken()) throw new Error("Database isn’t connected. In Vercel open Storage, add Upstash Redis, connect it to this project (Production), then redeploy.");
+  return (_db = new (require("@upstash/redis").Redis)({ url: redisUrl(), token: redisToken() }));
+};
 
 // ---- auth ----
 const sign = (v) => crypto.createHmac("sha256", E.SESSION_SECRET || "").update(v).digest("hex");
@@ -33,7 +38,7 @@ H.health = (req, res) => {
   res.json({
     site: "ok",
     adminPassword: !!E.ADMIN_PASSWORD, sessionSecret: !!E.SESSION_SECRET,
-    redis: !!((E.UPSTASH_REDIS_REST_URL || E.KV_REST_API_URL) && (E.UPSTASH_REDIS_REST_TOKEN || E.KV_REST_API_TOKEN)),
+    redis: !!(redisUrl() && redisToken()),
     blob: !!E.BLOB_READ_WRITE_TOKEN, skrillEmail: !!E.SKRILL_EMAIL, skrillSecret: !!E.SKRILL_SECRET_WORD,
   });
 };
