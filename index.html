@@ -22,7 +22,7 @@ label{font:500 12px 'DM Mono',monospace;letter-spacing:.1em;text-transform:upper
 #cal button{min-height:44px;border:0;background:#2b2723;color:var(--paper);font:500 15px 'DM Sans',sans-serif;cursor:pointer}
 #cal button:disabled{background:transparent;color:#6f675c;cursor:not-allowed}#cal button.on{background:var(--gold);color:var(--ink);font-weight:700}
 </style></head><body>
-<div class="mono" style="background:var(--ink);color:var(--paper);padding:10px 0"><div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px"><span>Open daily · 12–8</span><a href="https://www.google.com/maps/search/?api=1&query=901+Bagby+St+Houston+TX+77002" target="_blank" rel="noopener">901 Bagby St, Houston, TX 77002</a><a href="https://wa.me/447826700032">WhatsApp +44 7826 700032</a></div></div>
+<div class="mono" style="background:var(--ink);color:var(--paper);padding:10px 0"><div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px"><span>Open daily · 12–8</span><a href="https://www.google.com/maps/search/?api=1&query=901+Bagby+St+Houston+TX+77002" target="_blank" rel="noopener">901 Bagby St, Houston, TX 77002</a><a href="#" data-wa>Message us on WhatsApp</a></div></div>
 <header class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-top:18px;padding-bottom:18px">
 <a class="slab" href="#top" style="font-size:28px">Prince Tattoos</a>
 <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;font-weight:700"><a href="#gallery" style="min-height:44px;display:inline-flex;align-items:center">Gallery</a><a href="#contact" style="min-height:44px;display:inline-flex;align-items:center">Contact</a><a class="btn red" href="#book" style="min-height:44px;box-shadow:3px 3px 0 var(--fg)">Book a session</a></nav></header>
@@ -31,7 +31,7 @@ label{font:500 12px 'DM Mono',monospace;letter-spacing:.1em;text-transform:upper
 <span class="mono" style="color:var(--red)">Custom tattooing · By appointment</span>
 <h1 class="slab" style="font-size:clamp(48px,10vw,128px);line-height:.95">Pick it.<br>Pick a day.<br><span style="color:var(--red)">Sit down.</span></h1>
 <p style="margin:0;font-size:20px;max-width:520px">Browse the gallery, choose your dates and confirm your booking on WhatsApp. Questions? Message us any time.</p>
-<div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="#book">Choose your dates</a><a class="btn" href="#gallery">Browse the gallery</a><a class="btn" href="https://wa.me/447826700032" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook</a></div></section>
+<div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="#book">Choose your dates</a><a class="btn" href="#gallery">Browse the gallery</a><a class="btn" href="#" data-wa>WhatsApp</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook</a></div></section>
 <section id="gallery" class="wrap" style="padding-bottom:80px"><h2 class="slab" style="font-size:clamp(34px,6vw,60px);margin-bottom:24px">The gallery</h2>
 <div id="lgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px"></div></section>
 <section id="book" style="background:var(--ink);color:var(--paper);padding:72px 0"><div class="wrap">
@@ -52,11 +52,11 @@ label{font:500 12px 'DM Mono',monospace;letter-spacing:.1em;text-transform:upper
 <div class="f"><span class="mono" style="color:var(--gold)">Your booking</span><div id="sum" style="font-size:18px"></div><div id="msg" role="status" style="color:var(--gold);font-weight:700"></div></div>
 <div style="display:flex;flex-wrap:wrap;gap:16px"><button class="btn red" id="wa" style="border-color:var(--paper);box-shadow:4px 4px 0 var(--gold)">Checkout on WhatsApp</button></div></div></div></section>
 <section id="contact" class="wrap" style="padding:72px clamp(16px,4vw,48px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px"><div class="f" style="gap:14px"><h2 class="slab" style="font-size:clamp(34px,6vw,60px)">Say hello</h2><a href="https://www.google.com/maps/search/?api=1&query=901+Bagby+St+Houston+TX+77002" target="_blank" rel="noopener" style="font-size:19px;line-height:1.4"><b>Visit us</b><br>901 Bagby St<br>Houston, TX 77002</a></div>
-<div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="https://wa.me/447826700032" target="_blank" rel="noopener">WhatsApp +44 7826 700032</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=901+Bagby+St+Houston+TX+77002" target="_blank" rel="noopener">Get directions</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook page</a></div></section>
+<div style="display:flex;flex-wrap:wrap;gap:18px"><a class="btn red" href="#" data-wa>Message us on WhatsApp</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=901+Bagby+St+Houston+TX+77002" target="_blank" rel="noopener">Get directions</a><a class="btn" href="https://www.facebook.com/profile.php?id=61587796720376" target="_blank" rel="noopener">Facebook page</a></div></section>
 <footer class="mono wrap" style="padding-top:20px;padding-bottom:28px;border-top:3px solid var(--fg);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px"><span>Prince Tattoos · 901 Bagby St, Houston, TX 77002</span><span style="display:flex;flex-wrap:wrap;gap:8px 22px"><button id="ownb" style="background:none;border:0;padding:0;min-height:44px;font:inherit;color:inherit;cursor:pointer;text-decoration:underline">Owner login</button><a href="#top" style="min-height:44px;display:inline-flex;align-items:center">Back to top ↑</a></span></footer>
 <div id="ownf" class="wrap" hidden style="padding-bottom:32px"><form id="of" style="display:flex;flex-wrap:wrap;gap:10px;max-width:460px"><input id="opw" type="password" placeholder="Owner password" autocomplete="current-password" style="flex:1;min-width:180px"><button class="btn red" style="box-shadow:none">Sign in</button><div id="om" role="status" style="width:100%;font-weight:700"></div></form></div>
 <script>
-var $=function(i){return document.getElementById(i)},CUR="USD",DEP=50,WA="447826700032";
+var $=function(i){return document.getElementById(i)},CUR="USD",DEP=50,WA=atob("NDQ3ODI2NzAwMDMy");
 function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function opts(el,l){el.innerHTML=l.map(function(x){return "<option>"+x+"</option>"}).join("")}
 opts($("place"),["Not sure yet","Forearm","Upper arm","Full sleeve","Shoulder","Chest","Ribs","Back","Hand","Fingers","Neck","Thigh","Calf","Ankle","Foot","Full body"]);
@@ -117,6 +117,7 @@ function fb(){return{id:"n/a",total:dates().length*DEP,currency:CUR}}
 $("wa").onclick=async function(){var j=await save();if(!j)return;
  var t="Hi Prince Tattoos, I’d like to book (ref "+j.id+"). Name: "+$("name").value+". Placement: "+$("place").value+". Style: "+$("style").value+". Dates: "+dates().map(fmt).join(", ")+" at "+$("time").value+". Deposit: "+j.total+" "+j.currency+"."+($("notes").value?" "+$("notes").value:"");
  location.href="https://wa.me/"+WA+"?text="+encodeURIComponent(t)};
+document.querySelectorAll("[data-wa]").forEach(function(a){a.onclick=function(e){e.preventDefault();window.open("https://wa.me/"+WA,"_blank","noopener")}});
 drawCal();
 function openOwn(){$("ownf").hidden=false;$("ownf").scrollIntoView();$("opw").focus()}
 if(location.hash==="#owner")setTimeout(openOwn,300);
